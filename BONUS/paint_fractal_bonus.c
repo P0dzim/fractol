@@ -102,7 +102,7 @@ void	bsf_interation(int x, int y, unsigned int color, t_vars *ptrs)
 	i = 0;
 	z_nbr[R] = pixels[X];
 	z_nbr[I] = pixels[Y];
-	while ((z_nbr[I] > 2.0 || z_nbr[I] < -2.0
+	while (!(z_nbr[I] > 2.0 || z_nbr[I] < -2.0
 			|| z_nbr[R] > 2.0 || z_nbr[I] < -2.0) && i < ptrs->max_iter)
 	{
 		temp = z_nbr[R] * z_nbr[R] - z_nbr[I] * z_nbr[I] + pixels[R];
@@ -136,7 +136,7 @@ void	fix_julia_interation(int x, int y, unsigned int color, t_vars *ptrs)
 		pixels[I] = 2 * temp * pixels[I] + ptrs->ci;
 		i++;
 	}
-	color = ptrs->palete[(i % ptrs->max_iter % PALETTE_SIZE)].value;
+	color = ptrs->palete[(i + ptrs->max_iter % ptrs->max_iter % PALETTE_SIZE)].value;
 	if (i == ptrs->max_iter)
 		my_mlx_pixel_put(ptrs->data, x, y, 0);
 	else

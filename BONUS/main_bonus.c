@@ -13,48 +13,40 @@
 #include "fractol_bonus.h"
 
 static int	print_options(void);
-static int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 int	main(int argc, char **argv)
 {
 	t_vars	ptrs;
 	t_data	frame;
 
-	if (argc != 2)
+	if (argc < 2)
 		return (print_options());
-	if (!ft_strncmp(argv[1], "Mandelbrot", 10))
-	{
-		ptrs.frac = 'm';
-		ptrs.iter = mandelbrot_interation;
-	}
-	else if (!ft_strncmp(argv[1], "Julia", 10))
-	{
-		ptrs.frac = 'j';
-		ptrs.iter = julia_interation;
-	}
-	else if (!ft_strncmp(argv[1], "Burning-Ship", 10))
-	{
-		ptrs.frac = 'b';
-		ptrs.iter = bsf_interation;
-	}
+	ptrs.scale = 1.0;
+	ptrs.mx = 0.0;
+	ptrs.my = 0.0;
+	ptrs.palete_id = 0;
+	ptrs.max_iter = 200;
+	ptrs.data = &frame;
+	ptrs.frac = 'X';
+	if (param_check(argc, argv, &ptrs))
+		init_window(&frame, &ptrs);
 	else
 		return (print_options());
-	init_window(&frame, &ptrs);
 	return (0);
 }
 
-static int	print_options(void)
+int	print_options(void)
 {
-	write(2, "Mandelbrot\nJulia\nBurning-Ship\n", 30);
+	write(2, "Mandelbrot\nJulia\njulia-mouse\nBurning-Ship\n", 42);
 	return (1);
 }
 
-static int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	index;
 
 	index = 0;
-	while (((unsigned char)s1[index] || (unsigned char)s2[index]) && index < n)
+	while (((unsigned char)s1[index] || (unsigned char)s2[index]))
 	{
 		if ((unsigned char)s1[index] != (unsigned char)s2[index])
 			return ((unsigned char)s1[index] - (unsigned char)s2[index]);
@@ -62,3 +54,4 @@ static int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+
