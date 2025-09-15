@@ -22,7 +22,7 @@ int	mouse_pos(int x, int y, void *p)
 	ptrs->x = x;
 	ptrs->y = y;
 	if (ptrs->frac == 'j')
-		put_fractal(ptrs, ptrs->color);
+		put_fractal(ptrs);
 	return (0);
 }
 
@@ -47,7 +47,7 @@ int	mouse_zoom(int button, int x, int y, void *p)
 	new_mouse_im = 2 - ((float)y / Y_AXIS) * 4.0 / ptrs->scale;
 	ptrs->mx += mouse_re - new_mouse_re;
 	ptrs->my += new_mouse_im - mouse_im;
-	put_fractal(ptrs, ptrs->color);
+	put_fractal(ptrs);
 	return (0);
 }
 
@@ -57,17 +57,12 @@ int	input_keyboard(int keycode, void *param)
 
 	ptrs = (t_vars *) param;
 	if (keycode == XK_Escape)
-	{
 		(void) close_window(param);
-		return (0);
-	}
 	if (keycode == XK_Shift_L || keycode == XK_Shift_R)
-		ptrs->color = (unsigned int)(ptrs->color << 1);
-	if (!ptrs->color)
-		ptrs->color = 0x001affff;
-	put_fractal(ptrs, ptrs->color);
+		generate_palette(ptrs);
 	if (keycode >= XK_Left && keycode <= XK_Down)
 		move_control(keycode, ptrs);
+	put_fractal(ptrs);
 	return (0);
 }
 
