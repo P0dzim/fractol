@@ -1,0 +1,4 @@
+fractol
+*.o
+minilibx-linux
+a.out

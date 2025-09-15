@@ -1,9 +1,9 @@
 NAME		=	fractol
-CFLAGS		=	-Wall -Wextra -Werror -O3
+CFLAGS		=	-Wall -Wextra -O3
 MANDATORY	=	./MANDATORY/
 BONUS_DIR	=	./BONUS/
 CFILES		=	input_control.c  main.c  paint_fractal.c  window_control.c
-B_CFILES	=	input_control_bonus.c  main_bonus.c  paint_fractal_bonus.c  window_control_bonus.c
+B_CFILES	=	input_control_bonus.c  main_bonus.c  paint_fractal_bonus.c  window_control_bonus.c generate_palette.c check_param.c ft_atof.c
 SRC			=	${addprefix $(MANDATORY), $(CFILES)}
 OBJ			=	${SRC:.c=.o}
 B_SRC		=	${addprefix $(BONUS_DIR), $(B_CFILES)}
@@ -19,7 +19,7 @@ endif
 all: $(NAME)
 
 $(NAME): $(MINILIB) $(OBJ)
-	cc $(CFLAGS) $(SRC) -Lminilibx-linux -lmlx_Linux -lX11 -lXext -o $(NAME)
+	cc $(CFLAGS) $(SRC) -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm -o $(NAME)
 
 $(OBJ):
 	cc $(CFLAGS) ${@:.o=.c} -c -o ${@}
@@ -40,4 +40,4 @@ bonus: $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean bonus re
+#.PHONY: all clean fclean bonus re
