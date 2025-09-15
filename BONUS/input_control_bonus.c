@@ -29,18 +29,24 @@ int	mouse_pos(int x, int y, void *p)
 int	mouse_zoom(int button, int x, int y, void *p)
 {
 	t_vars	*ptrs;
+	float	new_mouse_re;
+	float	new_mouse_im;
+	float	mouse_re;
+	float	mouse_im;
 
 	ptrs = (t_vars *)p;
-	ptrs->x = x;
-	ptrs->y = y;
-	if (button < 4 || button > 5)
-		return (0);
+	mouse_re = -2 + ((float)x / X_AXIS) * 4.0 / ptrs->scale;
+	mouse_im = 2 - ((float)y / Y_AXIS) * 4.0 / ptrs->scale;
 	if (button == 4)
-		ptrs->scale += 0.25;
+		ptrs->scale *= ZOOM_SCALE;
+	else if (button == 5)
+		ptrs->scale /= ZOOM_SCALE;
 	else
-		ptrs->scale -= 0.25;
-	ptrs->mx += (x - X_AXIS / 2) * (4.0 / X_AXIS) * (ptrs->scale / ptrs->scale);
-	ptrs->my += (y - Y_AXIS / 2) * (4.0 / Y_AXIS) * (ptrs->scale / ptrs->scale);
+		return (0);
+	new_mouse_re = -2 + ((float)x / X_AXIS) * 4.0 / ptrs->scale;
+	new_mouse_im = 2 - ((float)y / Y_AXIS) * 4.0 / ptrs->scale;
+	ptrs->mx += mouse_re - new_mouse_re;
+	ptrs->my += new_mouse_im - mouse_im;
 	put_fractal(ptrs, ptrs->color);
 	return (0);
 }
