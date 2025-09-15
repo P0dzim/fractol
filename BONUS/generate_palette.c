@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generate_pallete.c                                 :+:      :+:    :+:   */
+/*   generate_palette.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vitosant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,11 @@
 
 #include "fractol_bonus.h"
 
-void	generate_pallete(t_vars *ptrs)
+void	generate_palette(t_vars *ptrs)
 {
 	int	i;
 	int	id;
-	t_pallete *palette;
+	t_palette *palette;
 
 	i = 0;
 	ptrs->palete_id = (ptrs->palete_id + 1) % MAX_SCHEMES;
